@@ -1,0 +1,37 @@
+import java.util.Scanner;
+
+public class CaesarCipher {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.print("Enter message: ");
+    String message = scanner.nextLine();
+
+    System.out.print("Enter shift value: ");
+    int shift = scanner.nextInt();
+
+    String encryptedMessage = encrypt(message, shift);
+    System.out.println("Encrypted message: " + encryptedMessage);
+
+    String decryptedMessage = decrypt(encryptedMessage, shift);
+    System.out.println("Decrypted message: " + decryptedMessage);
+  }
+
+  public static String encrypt(String message, int shift) {
+    char[] chars = message.toCharArray();
+    for (int i = 0; i < chars.length; i++) {
+      char c = chars[i];
+      if (c >= 'a' && c <= 'z') {
+        c = (char)('a' + (c - 'a' + shift) % 26);
+      } else if (c >= 'A' && c <= 'Z') {
+        c = (char)('A' + (c - 'A' + shift) % 26);
+      }
+      chars[i] = c;
+    }
+    return new String(chars);
+  }
+
+  public static String decrypt(String message, int shift) {
+    return encrypt(message, 26 - shift);
+  }
+}
